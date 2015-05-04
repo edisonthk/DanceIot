@@ -13,6 +13,9 @@
 		4168D29D1AF5FEA1002E8F38 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4168D29C1AF5FEA1002E8F38 /* Images.xcassets */; };
 		4168D2A01AF5FEA1002E8F38 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4168D29E1AF5FEA1002E8F38 /* LaunchScreen.xib */; };
 		4168D2AC1AF5FEA1002E8F38 /* Swift_TCPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4168D2AB1AF5FEA1002E8F38 /* Swift_TCPTests.swift */; };
+		41FA80841AF7E5E700B088E3 /* LeftLegHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FA80831AF7E5E700B088E3 /* LeftLegHandler.swift */; };
+		41FA80861AF7E61B00B088E3 /* TcpHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FA80851AF7E61B00B088E3 /* TcpHandler.swift */; };
+		41FA80881AF7E98800B088E3 /* RightLegHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FA80871AF7E98800B088E3 /* RightLegHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		4168D2A51AF5FEA1002E8F38 /* Swift TCPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Swift TCPTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4168D2AA1AF5FEA1002E8F38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4168D2AB1AF5FEA1002E8F38 /* Swift_TCPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift_TCPTests.swift; sourceTree = "<group>"; };
+		41FA80831AF7E5E700B088E3 /* LeftLegHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftLegHandler.swift; sourceTree = "<group>"; };
+		41FA80851AF7E61B00B088E3 /* TcpHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TcpHandler.swift; sourceTree = "<group>"; };
+		41FA80871AF7E98800B088E3 /* RightLegHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightLegHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +89,9 @@
 				4168D29C1AF5FEA1002E8F38 /* Images.xcassets */,
 				4168D29E1AF5FEA1002E8F38 /* LaunchScreen.xib */,
 				4168D2931AF5FEA1002E8F38 /* Supporting Files */,
+				41FA80831AF7E5E700B088E3 /* LeftLegHandler.swift */,
+				41FA80871AF7E98800B088E3 /* RightLegHandler.swift */,
+				41FA80851AF7E61B00B088E3 /* TcpHandler.swift */,
 			);
 			path = "Swift TCP";
 			sourceTree = "<group>";
@@ -212,8 +221,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41FA80861AF7E61B00B088E3 /* TcpHandler.swift in Sources */,
 				4168D2981AF5FEA1002E8F38 /* ViewController.swift in Sources */,
 				4168D2961AF5FEA1002E8F38 /* AppDelegate.swift in Sources */,
+				41FA80881AF7E98800B088E3 /* RightLegHandler.swift in Sources */,
+				41FA80841AF7E5E700B088E3 /* LeftLegHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +419,7 @@
 				4168D2B11AF5FEA1002E8F38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4168D2B21AF5FEA1002E8F38 /* Build configuration list for PBXNativeTarget "Swift TCPTests" */ = {
 			isa = XCConfigurationList;
@@ -415,6 +428,7 @@
 				4168D2B41AF5FEA1002E8F38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
