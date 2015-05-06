@@ -12,7 +12,7 @@ import UIKit
 class RightLegHandler : TcpHandler{
     
     let controller :ViewController;
-    let port:UInt32 = 56330;
+    let port:Int = 56330;
     let host:String = "127.0.0.1";
     
     init(controller: ViewController) {

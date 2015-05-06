@@ -11,27 +11,32 @@ import UIKit
 
 class TcpHandler : NSObject, NSStreamDelegate{
     
-    func initTcpNetwork(host:String,port :UInt32,delegate:NSStreamDelegate? ) {
-        printQueueLabel();
-        var readStream:  Unmanaged<CFReadStream>?
-        var writeStream: Unmanaged<CFWriteStream>?
+    var inputstream: NSInputStream?;
+    var outputstream: NSOutputStream?;
+    
+    
+    var sendFlag:Bool = true;
+    
+    
+    
+    func initTcpNetwork(host:String,port :Int,delegate:NSStreamDelegate? ) {
+//        printQueueLabel();
+
+        NSStream.getStreamsToHostWithName(host, port: port, inputStream: &inputstream, outputStream: &outputstream)
         
-        CFStreamCreatePairWithSocketToHost(nil, host, port, &readStream, &writeStream);
-        
-        var inputStream: NSInputStream = readStream!.takeRetainedValue();
-        var outputStream: NSOutputStream = writeStream!.takeRetainedValue();
-        
-        inputStream.delegate = delegate;
-        outputStream.delegate = delegate;
+        inputstream?.delegate=self;
+        outputstream?.delegate=self;
+
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)){
             self.printQueueLabel();
             let loop = NSRunLoop.currentRunLoop();
-            inputStream.scheduleInRunLoop(loop, forMode: NSDefaultRunLoopMode);
-            outputStream.scheduleInRunLoop(loop, forMode: NSDefaultRunLoopMode);
-            inputStream.open()
-            outputStream.open()
+            self.inputstream?.scheduleInRunLoop(loop, forMode: NSDefaultRunLoopMode);
+            self.outputstream?.scheduleInRunLoop(loop, forMode: NSDefaultRunLoopMode);
+            self.inputstream?.open()
+            self.outputstream?.open()
             loop.run();
+        
         }
         
     }
@@ -40,13 +45,24 @@ class TcpHandler : NSObject, NSStreamDelegate{
         let label = dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL);
         println("\(function) @ \(String.fromCString(label))");
     }
-
     
     func stream(aStream: NSStream, handleEvent eventCode: NSStreamEvent) {
-        printQueueLabel();
+//        printQueueLabel();
         switch (eventCode){
         case NSStreamEvent.OpenCompleted:
             NSLog("Stream opened");
+            break
+        case NSStreamEvent.HasSpaceAvailable:
+            NSLog("has space");
+            if(sendFlag) {
+                sendFlag = false;
+                var outputstream = aStream as? NSOutputStream;
+                var str = "0";
+                
+                var data: NSData = str.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!;
+                outputstream?.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length);
+            }
+            
             break
         case NSStreamEvent.HasBytesAvailable:
             var inputstream = aStream as? NSInputStream;
@@ -61,12 +77,17 @@ class TcpHandler : NSObject, NSStreamDelegate{
                     })
                 }
             }
+            
+            
             break
         case NSStreamEvent.ErrorOccurred:
-            NSLog("ErrorOccurred")
+            var err = aStream.streamError;
+            print(err?.description);
+            
             break
         case NSStreamEvent.EndEncountered:
-            NSLog("EndEncountered")
+            aStream.close();
+            aStream.removeFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode);
             break
         default:
             NSLog("unknown.")

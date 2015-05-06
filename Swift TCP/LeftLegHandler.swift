@@ -12,8 +12,8 @@ import UIKit
 class LeftLegHandler : TcpHandler{
     
     let controller :ViewController;
-    let port:UInt32 = 55222;
-    let host:String = "127.0.0.1";
+    let port:Int = 8080;
+    let host:String = "192.168.0.12";
     
     init(controller: ViewController) {
         self.controller = controller;
