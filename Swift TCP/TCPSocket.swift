@@ -138,7 +138,9 @@ public class TCPSocket : NSObject, NSStreamDelegate {
         inputStream!.open()
         outputStream!.open()
         while(isRunLoop) {
-            NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate.distantFuture() as! NSDate)
+            if let date = NSDate.distantFuture() as? NSDate{
+                NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: date)
+            }
         }
     }
 
@@ -178,8 +180,8 @@ public class TCPSocket : NSObject, NSStreamDelegate {
     //disconnect the stream object
     private func disconnectStream(error: NSError?) {
         outputQueue.waitUntilAllOperationsAreFinished()
-        let cleanStream:(NSStream?)->Void = {
-            if let stream = $0 {
+        func cleanStream(aStream:NSStream?){
+            if let stream = aStream {
                 stream.removeFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
                 stream.close()
             }
