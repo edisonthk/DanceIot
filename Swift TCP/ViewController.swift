@@ -45,12 +45,13 @@ class ViewController: UIViewController {
             //Socketの初期化と受信ハンドル設定 + Socket open
             println("This is test")
             self.socket1 = TCPSocket(url: url, connect: connected, disconnect: nil, text: receiveText, data: nil)
-            self.socket1?.connect()
+            self.socket1?.open()
         })
     }
 
     @IBAction func touchUpInside(sender: AnyObject) {
         println("touched");
+        self.socket1?.writeString("TouchUpInside\n");
     }
 
 }
