@@ -10,7 +10,7 @@ public protocol TCPSocketDelegate: class {
 
 public class TCPSocket : NSObject, NSStreamDelegate {
 //MARK: - type definition
-    public typealias connectedBlock_t = (Void) -> Void
+    public typealias connectedBlock_t = (TCPSocket) -> Void
     public typealias disconnectedBlock_t = (NSError?) -> Void
     public typealias receivedTextBlock_t = (String) -> Void
     public typealias receivedDataBlock_t = (NSData) -> Void
@@ -105,6 +105,12 @@ public class TCPSocket : NSObject, NSStreamDelegate {
 
 // MARK: - Input/Output
     ///write a string to the TCPSocket. This sends it as a text frame.
+    func println<T>(value: T){
+        writeString(toString(value)+"\n")
+    }
+    func print<T>(value: T){
+        writeString(toString(value))
+    }
     public func writeString(str: String) {
         writeData(str.dataUsingEncoding(NSUTF8StringEncoding)!)
     }
@@ -158,6 +164,11 @@ public class TCPSocket : NSObject, NSStreamDelegate {
             Log.i("stream( \(type), .HasSpaceAvailable)")
         case NSStreamEvent.OpenCompleted:
             Log.i("stream( \(type), .OpenCompleted)")
+            if(inputStream?.streamStatus == .Open && outputStream?.streamStatus == .Open && !connected){
+                connected = true;
+                self.connectedBlock?(self)
+                self.delegate?.TCPSocketDidConnect(self)
+            }
         case NSStreamEvent.None:
             Log.i("stream( \(type), .None)")
         default:
