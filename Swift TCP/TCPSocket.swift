@@ -117,13 +117,12 @@ public class TCPSocket : NSObject, NSStreamDelegate {
 
     //private method that starts the connection
     private func openSocket() {
-        let str: NSString = url.absoluteString!
-        var port = url.port ?? 80
-        self.initStreams(Int(port))
+        self.initStreams()
     }
 
     //Start the stream connection and write the data to the output stream
-    private func initStreams(port: Int) {
+    private func initStreams() {
+        let port:Int = url.port?.integerValue ?? 80
         self.dynamicType.getStreamsToHostWithName(url.host!, port: port, inputStream: &inputStream, outputStream: &outputStream)
         inputStream!.delegate = self
         outputStream!.delegate = self
@@ -141,19 +140,31 @@ public class TCPSocket : NSObject, NSStreamDelegate {
     //MARK: - communication
     //delegate for the stream methods. Processes incoming bytes
     public func stream(aStream: NSStream, handleEvent eventCode: NSStreamEvent) {
+        let type = aStream.dynamicType
         switch eventCode {
         case NSStreamEvent.HasBytesAvailable:
-            if(aStream == inputStream) {
+            Log.i("stream( \(type), .HasBytesAvailable)")
+            if(aStream is NSInputStream) {
                 processInputStream()
             }
         case NSStreamEvent.ErrorOccurred:
+            Log.i("stream( \(type), .ErrorOccurred)")
             disconnectStream(aStream.streamError)
         case NSStreamEvent.EndEncountered:
+            Log.i("stream( \(type), .EndEncountered)")
             disconnectStream(nil)
+            //Only for logging
+        case NSStreamEvent.HasSpaceAvailable:
+            Log.i("stream( \(type), .HasSpaceAvailable)")
+        case NSStreamEvent.OpenCompleted:
+            Log.i("stream( \(type), .OpenCompleted)")
+        case NSStreamEvent.None:
+            Log.i("stream( \(type), .None)")
         default:
             break
         }
     }
+    
     //disconnect the stream object
     private func disconnectStream(error: NSError?) {
         outputQueue.waitUntilAllOperationsAreFinished()
@@ -179,50 +190,25 @@ public class TCPSocket : NSObject, NSStreamDelegate {
     private func processInputStream() {
         var buffer = [UInt8](count: BUFFER_MAX, repeatedValue: 0)
         while(inputStream!.hasBytesAvailable){
-            let length = inputStream!.read(buffer, maxLength: BUFFER_MAX)
-            if(0<len){
+            let length = inputStream!.read(&buffer, maxLength: BUFFER_MAX)
+            if(0<length){
+                var output: NSString = NSString(bytes:&buffer, length:length, encoding:NSASCIIStringEncoding)!;
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.receivedTextBlock?(output as String);
+                })
                 
             }
-        }
-        if length > 0 {
-            if connected {
-                var process = false
-                if inputQueue.count == 0 {
-                    process = true
-                }
-                inputQueue.append(NSData(bytes: buffer, length: length))
-                if process {
-                    dequeueInput()
-                }
-            } else {
-                //                connected = processHTTP(buffer, bufferLen: length)
-                //                if !connected {
-                //                    dispatch_async(callbackQueue,{
-                //                        //self.workaroundMethod()
-                //                        self.errorNotificationWithDetail("Invalid HTTP upgrade", 1)
-                //                    })
-                //                }
-            }
-        }
-    }
-
-    //MARK: - Data Operation
-    ///dequeue the incoming input so it is processed in order
-    private func dequeueInput() {
-        if( 0 < inputQueue.count ){
-            let data = inputQueue.removeAtIndex(0)
-            /*
-            .
-            .
-            .
-            */
-            dequeueInput()
         }
     }
 
     ///used to write things to the stream in a
     private func enqueueOutput(data: NSData) {
         outputQueue.addOperationWithBlock {
+            if let stream = self.outputStream{
+                if(stream.hasSpaceAvailable){
+                    stream.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length)
+                }
+            }
         }
     }
 }

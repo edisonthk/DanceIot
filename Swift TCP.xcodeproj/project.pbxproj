@@ -15,6 +15,7 @@
 		4168D2AC1AF5FEA1002E8F38 /* Swift_TCPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4168D2AB1AF5FEA1002E8F38 /* Swift_TCPTests.swift */; };
 		A31CAFCD1AFB6A5E00439B42 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31CAFCC1AFB6A5E00439B42 /* WebSocket.swift */; };
 		A33F18AD1AFB308F006B0716 /* TCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33F18AC1AFB308F006B0716 /* TCPSocket.swift */; };
+		A358492D1AFCA842007F27D4 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A358492C1AFCA842007F27D4 /* Helper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		4168D2AB1AF5FEA1002E8F38 /* Swift_TCPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift_TCPTests.swift; sourceTree = "<group>"; };
 		A31CAFCC1AFB6A5E00439B42 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		A33F18AC1AFB308F006B0716 /* TCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCPSocket.swift; sourceTree = "<group>"; };
+		A358492C1AFCA842007F27D4 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				4168D2931AF5FEA1002E8F38 /* Supporting Files */,
 				A33F18AC1AFB308F006B0716 /* TCPSocket.swift */,
 				A31CAFCC1AFB6A5E00439B42 /* WebSocket.swift */,
+				A358492C1AFCA842007F27D4 /* Helper.swift */,
 			);
 			path = "Swift TCP";
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 			files = (
 				4168D2981AF5FEA1002E8F38 /* ViewController.swift in Sources */,
 				A31CAFCD1AFB6A5E00439B42 /* WebSocket.swift in Sources */,
+				A358492D1AFCA842007F27D4 /* Helper.swift in Sources */,
 				A33F18AD1AFB308F006B0716 /* TCPSocket.swift in Sources */,
 				4168D2961AF5FEA1002E8F38 /* AppDelegate.swift in Sources */,
 			);
