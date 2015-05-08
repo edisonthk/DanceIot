@@ -70,7 +70,7 @@ public class TCPSocket : NSObject, NSStreamDelegate {
         outputStream.memory = writeStream!.takeUnretainedValue()
     }
 
-    // MARK: - Initializer
+// MARK: - Initializer
     //init the TCPSocket with a url
     public init(url: NSURL, delegate:TCPSocketDelegate?=nil) {
         self.url = url
@@ -86,7 +86,7 @@ public class TCPSocket : NSObject, NSStreamDelegate {
         receivedDataBlock = data
     }
 
-    // MARK: - Connection Interface
+// MARK: - Connection Interface
     ///Connect to the TCPSocket server on a background thread
     public func open() {
         if isCreated {
@@ -125,14 +125,13 @@ public class TCPSocket : NSObject, NSStreamDelegate {
     private func openSocket() {
         self.initStreams()
     }
-
     //Start the stream connection and write the data to the output stream
     private func initStreams() {
         let port:Int = url.port?.integerValue ?? 80
         self.dynamicType.getStreamsToHostWithName(url.host!, port: port, inputStream: &inputStream, outputStream: &outputStream)
         inputStream!.delegate = self
         outputStream!.delegate = self
-
+    
         isRunLoop = true
         inputStream!.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
         outputStream!.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
@@ -175,7 +174,7 @@ public class TCPSocket : NSObject, NSStreamDelegate {
             break
         }
     }
-    
+
     //disconnect the stream object
     private func disconnectStream(error: NSError?) {
         outputQueue.waitUntilAllOperationsAreFinished()
@@ -207,7 +206,7 @@ public class TCPSocket : NSObject, NSStreamDelegate {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.receivedTextBlock?(output as String);
                 })
-                
+            
             }
         }
     }

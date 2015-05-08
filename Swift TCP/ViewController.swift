@@ -10,22 +10,17 @@ import CoreFoundation;
 import UIKit
 
 class ViewController: UIViewController {
-    
+
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var myImage: UIImageView!
-    
-    
+
     var socket1 : TCPSocket?
     var socket2 : TCPSocket?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 
-        
-        
         var msg = "Hello socket";
-
         //        var fileURL = NSBundle.mainBundle().URLForResource("image", withExtension: "png")
         myImage.image = UIImage(named: "makefg");
         let url = NSURL(scheme: "", host: "127.0.0.1:3100", path: "/")!
@@ -37,12 +32,6 @@ class ViewController: UIViewController {
         let receiveText: (String) -> Void = {
             Log.i("->"+$0);
         }
-        //        let disconnected: disconnectedBlock_t = {
-        //            println("disconnected")
-        //        }
-        //        let receiveData: (NSData)-> Void = {
-        //            println("Receive data")
-        //        }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
             //Socketの初期化と受信ハンドル設定 + Socket open
             self.socket1 = TCPSocket(url: url, connect: connected, disconnect: nil, text: receiveText, data: nil)
@@ -57,4 +46,3 @@ class ViewController: UIViewController {
     }
 
 }
-
