@@ -208,7 +208,7 @@ public class TCPSocket : NSObject, NSStreamDelegate {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.receivedTextBlock?(output as String);
                 })
-            
+                self.connectedBlock?(self);
             }
         }
     }

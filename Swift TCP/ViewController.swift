@@ -23,10 +23,10 @@ class ViewController: UIViewController {
         var msg = "Hello socket";
         //        var fileURL = NSBundle.mainBundle().URLForResource("image", withExtension: "png")
         myImage.image = UIImage(named: "makefg");
-        let url = NSURL(scheme: "", host: "127.0.0.1:3100", path: "/")!
+        let url = NSURL(scheme: "", host: "127.0.0.1:3101", path: "/")!
         let connected: (TCPSocket) -> Void = {
-            let str = "Hello, Socket"
-            Log.i("<-"+str);
+            let str = "Hello, Socketaaaaa"
+//            Log.i("<-"+str);
             $0.println(str);
         }
         let receiveText: (String) -> Void = {
